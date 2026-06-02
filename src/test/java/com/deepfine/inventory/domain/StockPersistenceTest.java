@@ -1,6 +1,6 @@
 package com.deepfine.inventory.domain;
 
-import static com.deepfine.inventory.domain.StockFixture.aStock;
+import static com.deepfine.inventory.StockFixtures.aStock;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.deepfine.inventory.config.JpaAuditingConfig;
@@ -29,7 +29,7 @@ class StockPersistenceTest {
 	@DisplayName("저장 → 조회 → 값·공통 컬럼·version 채워짐")
 	void save_then_find() {
 		// given
-		Stock stock = aStock().productId("PROD-001").quantity(100).build();
+		Stock stock = aStock().quantity(100).build();
 
 		// when
 		Stock saved = stockRepository.save(stock);

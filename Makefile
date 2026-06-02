@@ -1,4 +1,7 @@
-.PHONY: build db-up db-down run
+.PHONY: build db-up db-down run db-desc
+
+# 조회할 테이블 (기본 stock) — make db-desc TABLE=... 로 바꿀 수 있음
+TABLE ?= stock
 
 # 빌드
 build:
@@ -15,3 +18,7 @@ db-down:
 # 앱 실행
 run:
 	./gradlew bootRun
+
+# 테이블 컬럼 정보 확인 (기본 stock, make db-desc TABLE=... 로 지정)
+db-desc:
+	docker exec inventory-postgres psql -U inventory -d inventory -c "\d $(TABLE)"

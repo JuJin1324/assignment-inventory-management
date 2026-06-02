@@ -1,8 +1,8 @@
 package com.deepfine.inventory.domain;
 
+import static com.deepfine.inventory.StockFixtures.aStock;
 import static com.deepfine.inventory.domain.ShipmentResult.INSUFFICIENT;
 import static com.deepfine.inventory.domain.ShipmentResult.SUCCESS;
-import static com.deepfine.inventory.domain.StockFixture.aStock;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
