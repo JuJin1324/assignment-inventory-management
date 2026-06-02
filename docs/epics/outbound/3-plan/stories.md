@@ -42,20 +42,20 @@ ADR 후보 배치 (한 Story 안에서도 ADR 단위로 하나씩 결정):
 
 ### 목적
 
-Story 1의 순수 도메인을 건드리지 않고, 바깥에 영속 어댑터를 붙여 PostgreSQL에 저장한다. DB를 띄울 실행 환경(Docker로 PostgreSQL 구동, Make로 빌드·실행·DB 초기화 자동화, psql로 확인)도 여기서 선다.
+Story 1의 출고 도메인 로직을 유지한 채, 그 위에 JPA 매핑과 영속 계층을 더해 PostgreSQL에 저장한다. DB를 띄울 실행 환경(Docker로 PostgreSQL 구동, Make로 빌드·실행·DB 초기화 자동화, psql로 확인)도 여기서 선다.
 
 ### 실행 완료 기준
 
 - PostgreSQL이 Docker로 뜨고, Make 한 명령으로 빌드·실행·DB 초기화가 된다
 - 상품·재고 도메인이 PostgreSQL에 저장·조회된다 (영속 어댑터)
-- Story 1의 도메인 단위 테스트는 그대로 통과한다 (도메인은 안 바뀜)
+- Story 1의 도메인 단위 테스트는 그대로 통과한다 (도메인 동작 불변 — JPA 매핑은 더해지되 로직은 안 바뀜)
 - 저장 후 조회로 영속이 동작함을 확인한다
 
 ### ADR 후보
 
-- **도메인 엔티티와 JPA 엔티티 분리 여부** — 분리(도메인은 순수, JPA 엔티티 별도 + 매핑) vs 하나로(도메인에 JPA 매핑). 영속은 JPA로 확정.
-- **재고 저장 모델** — 수량 컬럼 vs 변동 이력 합산
-- **영속 계층 단위테스트 추가 여부** — 영속 어댑터(리포지토리) 테스트를 둘지
+- **도메인 엔티티와 JPA 엔티티 분리 여부** — 결정: 하나로(도메인에 직접 JPA 매핑) + 공통 컬럼 규약(BaseEntity: createdAt·updatedAt·version)·낙관락 → [ADR-004](../../../adr/adr-004-jpa-entity-merged.md)
+- **재고 저장 모델** — 결정: 수량 컬럼 → [ADR-005](../../../adr/adr-005-stock-quantity-column.md)
+- **영속 계층 단위테스트 추가 여부** — 결정: 둔다(@DataJpaTest 슬라이스) → [ADR-006](../../../adr/adr-006-persistence-test.md)
 
 ## Story 3 — API 노출
 
