@@ -2,6 +2,7 @@ package com.deepfine.inventory;
 
 import com.deepfine.inventory.domain.Stock;
 import com.deepfine.inventory.service.ShipCommand;
+import com.deepfine.inventory.web.ShipmentRequest;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +26,10 @@ public class StockFixtures {
 
 	public static ShipCommandTestBuilder aShipCommand() {
 		return new ShipCommandTestBuilder();
+	}
+
+	public static ShipmentRequestTestBuilder aShipmentRequest() {
+		return new ShipmentRequestTestBuilder();
 	}
 
 	@NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -71,6 +76,22 @@ public class StockFixtures {
 
 		public ShipCommand build() {
 			return new ShipCommand(productId, quantity);
+		}
+	}
+
+	@NoArgsConstructor(access = AccessLevel.PRIVATE)
+	public static class ShipmentRequestTestBuilder {
+
+		private String productId = DEFAULT_PRODUCT_ID;
+		private int quantity = DEFAULT_SHIP_QUANTITY;
+
+		public ShipmentRequestTestBuilder quantity(int quantity) {
+			this.quantity = quantity;
+			return this;
+		}
+
+		public ShipmentRequest build() {
+			return new ShipmentRequest(productId, quantity);
 		}
 	}
 }

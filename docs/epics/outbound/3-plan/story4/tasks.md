@@ -6,7 +6,7 @@
 
 ```mermaid
 graph LR
-    T1["Task 1<br/>출고 엔드포인트 (정상 흐름 — 성공·부족 응답)"]
+    T1["Task 1<br/>출고 엔드포인트 (정상 흐름 — 성공·부족 응답) (완료)"]
     T2["Task 2<br/>예외 → HTTP 상태 매핑 (404·400)"]
     T1 --> T2
 ```
@@ -15,7 +15,9 @@ graph LR
 
 ---
 
-## Task 1 — 출고 엔드포인트 (정상 흐름)
+## Task 1 — 출고 엔드포인트 (정상 흐름) ✅ 완료
+
+실행 기록: [task1-executed.md](task1-executed.md)
 
 ### 목표
 
