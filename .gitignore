@@ -1,0 +1,27 @@
+# IDE - IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# IDE - Eclipse / VS Code
+.classpath
+.project
+.settings/
+.vscode/
+
+# Build - Gradle
+.gradle/
+build/
+
+# Build - Maven
+target/
+
+# Java
+*.class
+*.log
+hs_err_pid*
+
+# OS
+.DS_Store
