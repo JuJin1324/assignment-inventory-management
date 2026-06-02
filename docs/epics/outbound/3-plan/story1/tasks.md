@@ -7,7 +7,7 @@
 ```mermaid
 graph LR
     T1["Task 1<br/>Gradle 골격 (완료)"]
-    T2["Task 2<br/>재고 + 정상 출고"]
+    T2["Task 2<br/>재고 + 정상 출고 (완료)"]
     T3["Task 3<br/>재고 부족 거부"]
     T4["Task 4<br/>경계·불변식 방어"]
     T1 --> T2 --> T3 --> T4
@@ -48,7 +48,9 @@ graph LR
 
 ---
 
-## Task 2 — 재고 + 정상 출고
+## Task 2 — 재고 + 정상 출고 ✅ 완료
+
+실행 기록: [task2-executed.md](task2-executed.md)
 
 ### 목표
 
