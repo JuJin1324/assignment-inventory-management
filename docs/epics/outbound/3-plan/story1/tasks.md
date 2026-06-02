@@ -9,7 +9,7 @@ graph LR
     T1["Task 1<br/>Gradle 골격 (완료)"]
     T2["Task 2<br/>재고 + 정상 출고 (완료)"]
     T3["Task 3<br/>재고 부족 거부 (완료)"]
-    T4["Task 4<br/>경계·불변식 방어"]
+    T4["Task 4<br/>경계·불변식 방어 (완료)"]
     T1 --> T2 --> T3 --> T4
 ```
 
@@ -104,7 +104,9 @@ graph LR
 
 ---
 
-## Task 4 — 경계·불변식 방어
+## Task 4 — 경계·불변식 방어 ✅ 완료
+
+실행 기록: [task4-executed.md](task4-executed.md)
 
 ### 목표
 
