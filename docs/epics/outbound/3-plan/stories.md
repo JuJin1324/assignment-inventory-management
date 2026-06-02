@@ -19,7 +19,7 @@ ADR 후보 배치 (한 Story 안에서도 ADR 단위로 하나씩 결정):
 
 - **Story 1** — 구현 아키텍처(레이어드 vs 헥사고날), FP(ADT) 도입 여부, 단위테스트 전략(Given/When/Then·Fixture)
 - **Story 2** — 도메인 엔티티와 JPA 엔티티 분리 여부, 재고 저장 모델(수량 컬럼 vs 변동 이력 합산)
-- **Story 3** — 서비스 테스트 방식 (repository 목 단위테스트 vs 영속까지 묶은 통합)
+- **Story 3** — 서비스 테스트 방식: 결정 repository 목 단위테스트 → [ADR-007](../../../adr/adr-007-service-test-mock.md)
 - **Story 4** — API 계층 테스트 방식 (컨트롤러 단위테스트 vs 통합테스트)
 
 ## Story 1 — 출고 도메인 + 단위 테스트
@@ -74,7 +74,7 @@ Story 1 도메인과 Story 2 영속 사이를 잇는 서비스 계층을 세운�
 
 ### ADR 후보
 
-- **서비스 테스트 방식** — repository를 목으로 둔 단위테스트 vs 영속까지 묶은 통합테스트
+- **서비스 테스트 방식** — 결정: repository를 목으로 둔 단위테스트 → [ADR-007](../../../adr/adr-007-service-test-mock.md)
 
 ## Story 4 — API 노출
 
