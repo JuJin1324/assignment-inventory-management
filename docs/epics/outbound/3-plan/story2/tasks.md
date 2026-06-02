@@ -7,7 +7,7 @@
 ```mermaid
 graph LR
     T1["Task 1<br/>실행 환경 (완료)<br/>(Docker PostgreSQL + Make + JPA 베이스)"]
-    T2["Task 2<br/>Stock 영속 + 저장·조회 검증"]
+    T2["Task 2<br/>Stock 영속 + 저장·조회 검증 (완료)"]
     T1 --> T2
 ```
 
@@ -47,7 +47,9 @@ PostgreSQL을 Docker로 띄우고, Make 한 명령으로 빌드·실행할 수 �
 
 ---
 
-## Task 2 — Stock 영속 + 저장·조회 검증
+## Task 2 — Stock 영속 + 저장·조회 검증 ✅ 완료
+
+실행 기록: [task2-executed.md](task2-executed.md)
 
 ### 목표
 
