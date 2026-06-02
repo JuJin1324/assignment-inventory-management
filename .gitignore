@@ -25,3 +25,6 @@ hs_err_pid*
 
 # OS
 .DS_Store
+
+# 과제 본문 (외부 공유·유포 금지)
+docs/assignment.md
