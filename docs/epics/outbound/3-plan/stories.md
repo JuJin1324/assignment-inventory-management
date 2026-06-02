@@ -34,9 +34,9 @@ ADR 후보 배치 (한 Story 안에서도 ADR 단위로 하나씩 결정):
 
 ### ADR 후보
 
-- **구현 아키텍처** — 레이어드 vs 헥사고날. 도메인-퍼스트라 도메인과 바깥(영속·웹)의 경계를 여기서 잡는다.
-- **FP(ADT) 도입 여부** — 출고 결과(성공·재고 부족)를 대수적 데이터 타입(sealed 타입·Result)으로 모델링할지, 명령형·예외 기반으로 둘지.
-- **단위테스트 전략** — Given/When/Then 구조, Fixture 패턴 도입.
+- **구현 아키텍처** — 결정: 레이어드 기반 + 헥사고날 요소 일부 → [ADR-001](../../../adr/adr-001-layered-with-hexagonal.md)
+- **FP(ADT) 도입 여부** — 결정: 도입 안 함 (재고 상태가 ADT를 정당화할 만큼 풍부하지 않음) → [ADR-002](../../../adr/adr-002-no-adt.md)
+- **단위테스트 전략** — 결정: JUnit5/AssertJ · Given/When/Then · Test Data Builder → [ADR-003](../../../adr/adr-003-test-strategy.md)
 
 ## Story 2 — RDBMS 도입 (영속)
 
