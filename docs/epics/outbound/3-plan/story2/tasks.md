@@ -6,7 +6,7 @@
 
 ```mermaid
 graph LR
-    T1["Task 1<br/>실행 환경<br/>(Docker PostgreSQL + Make + JPA 베이스)"]
+    T1["Task 1<br/>실행 환경 (완료)<br/>(Docker PostgreSQL + Make + JPA 베이스)"]
     T2["Task 2<br/>Stock 영속 + 저장·조회 검증"]
     T1 --> T2
 ```
@@ -17,7 +17,9 @@ graph LR
 
 ---
 
-## Task 1 — 실행 환경 (Docker PostgreSQL + Make + JPA 베이스)
+## Task 1 — 실행 환경 (Docker PostgreSQL + Make + JPA 베이스) ✅ 완료
+
+실행 기록: [task1-executed.md](task1-executed.md)
 
 ### 목표
 
