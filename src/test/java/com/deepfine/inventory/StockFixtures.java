@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class StockFixtures {
 
 	public static final String DEFAULT_PRODUCT_ID = "PROD-001";
+	private static final String NOT_FOUND_PRODUCT_ID = "NO-SUCH-PRODUCT";
 	private static final int DEFAULT_STOCK_QUANTITY = 100;
 	private static final int DEFAULT_SHIP_QUANTITY = 30;
 
@@ -65,7 +66,7 @@ public class StockFixtures {
 		private int quantity = DEFAULT_SHIP_QUANTITY;
 
 		public ShipCommandTestBuilder notFoundProductId() {
-			this.productId = "NO-SUCH-PRODUCT";
+			this.productId = NOT_FOUND_PRODUCT_ID;
 			return this;
 		}
 
@@ -87,6 +88,21 @@ public class StockFixtures {
 
 		public ShipmentRequestTestBuilder quantity(int quantity) {
 			this.quantity = quantity;
+			return this;
+		}
+
+		public ShipmentRequestTestBuilder notFoundProductId() {
+			this.productId = NOT_FOUND_PRODUCT_ID;
+			return this;
+		}
+
+		public ShipmentRequestTestBuilder zeroQuantity() {
+			this.quantity = 0;
+			return this;
+		}
+
+		public ShipmentRequestTestBuilder blankProductId() {
+			this.productId = "";
 			return this;
 		}
 

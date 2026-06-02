@@ -3,6 +3,7 @@ package com.deepfine.inventory.web;
 import com.deepfine.inventory.domain.ShipmentResult;
 import com.deepfine.inventory.service.ShipResult;
 import com.deepfine.inventory.service.ShipService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class ShipmentController {
 	private final ShipService shipService;
 
 	@PostMapping("/api/stock/shipment")
-	public ResponseEntity<ShipmentResponse> ship(@RequestBody ShipmentRequest request) {
+	public ResponseEntity<ShipmentResponse> ship(@Valid @RequestBody ShipmentRequest request) {
 		ShipResult result = shipService.ship(request.toCommand());
 		ShipmentResponse body = new ShipmentResponse(result.remainingQuantity());
 

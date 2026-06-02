@@ -2,6 +2,7 @@ package com.deepfine.inventory.web;
 
 import com.deepfine.inventory.service.ShipResult;
 import com.deepfine.inventory.service.ShipService;
+import com.deepfine.inventory.service.StockNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,6 +57,39 @@ class ShipmentControllerTest {
                         .content(asJson(aShipmentRequest().quantity(120).build())))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.remainingQuantity").value(100));
+    }
+
+    @Test
+    @DisplayName("대상 재고 없음 → 404")
+    void ship_stockNotFound() throws Exception {
+        ShipmentRequest request = aShipmentRequest().notFoundProductId().build();
+        when(shipService.ship(any())).thenThrow(new StockNotFoundException(request.productId()));
+
+        mockMvc.perform(post(SHIP_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJson(request)))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value(404));
+    }
+
+    @Test
+    @DisplayName("출고 수량 0 → 400 (경계 검증, 서비스 미진입)")
+    void ship_invalidQuantity() throws Exception {
+        mockMvc.perform(post(SHIP_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJson(aShipmentRequest().zeroQuantity().build())))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400));
+    }
+
+    @Test
+    @DisplayName("빈 productId → 400 (경계 검증, 서비스 미진입)")
+    void ship_blankProductId() throws Exception {
+        mockMvc.perform(post(SHIP_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJson(aShipmentRequest().blankProductId().build())))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400));
     }
 
     private String asJson(Object value) throws Exception {
