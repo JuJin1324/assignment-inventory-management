@@ -1,6 +1,8 @@
 package com.deepfine.inventory.web;
 
 import com.deepfine.inventory.domain.ShipmentResult;
+import com.deepfine.inventory.service.ReceiveResult;
+import com.deepfine.inventory.service.ReceiveService;
 import com.deepfine.inventory.service.ShipResult;
 import com.deepfine.inventory.service.ShipService;
 import jakarta.validation.Valid;
@@ -18,15 +20,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
 	private final ShipService shipService;
+	private final ReceiveService receiveService;
 
 	@PostMapping("/shipments")
 	public ResponseEntity<ShipmentResponse> ship(@Valid @RequestBody ShipmentRequest request) {
 		ShipResult result = shipService.ship(request.toCommand());
-		ShipmentResponse body = new ShipmentResponse(result.remainingQuantity());
+		var body = new ShipmentResponse(result.remainingQuantity());
 
 		if (result.outcome() == ShipmentResult.SUCCESS) {
 			return ResponseEntity.ok(body);
 		}
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+	}
+
+	@PostMapping("/receipts")
+	public ResponseEntity<ReceiveResponse> receive(@Valid @RequestBody ReceiveRequest request) {
+		ReceiveResult result = receiveService.receive(request.toCommand());
+		return ResponseEntity.ok(new ReceiveResponse(result.quantity()));
 	}
 }

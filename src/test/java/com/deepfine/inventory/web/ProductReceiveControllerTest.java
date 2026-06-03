@@ -1,8 +1,7 @@
 package com.deepfine.inventory.web;
 
-import com.deepfine.inventory.service.ProductNotFoundException;
+import com.deepfine.inventory.service.ReceiveResult;
 import com.deepfine.inventory.service.ReceiveService;
-import com.deepfine.inventory.service.ShipResult;
 import com.deepfine.inventory.service.ShipService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -13,9 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.deepfine.inventory.ProductFixtures.aShipmentRequest;
-import static com.deepfine.inventory.domain.ShipmentResult.INSUFFICIENT;
-import static com.deepfine.inventory.domain.ShipmentResult.SUCCESS;
+import static com.deepfine.inventory.ProductFixtures.aReceiveRequest;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -23,9 +20,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ProductController.class)
-class ProductShipControllerTest {
+class ProductReceiveControllerTest {
 
-    private static final String SHIP_URL = "/api/products/shipments";
+    private static final String RECEIVE_URL = "/api/products/receipts";
 
     @Autowired
     private MockMvc mockMvc;
@@ -40,49 +37,47 @@ class ProductShipControllerTest {
     private ReceiveService receiveService;
 
     @Test
-    @DisplayName("출고 성공 → 200 + 남은 재고")
-    void ship_success() throws Exception {
-        when(shipService.ship(any())).thenReturn(new ShipResult(SUCCESS, 70));
+    @DisplayName("기존 상품 입고 → 200 + 증가된 수량")
+    void receive_existing_product() throws Exception {
+        when(receiveService.receive(any())).thenReturn(new ReceiveResult(130));
 
-        var request = aShipmentRequest().quantity(30).build();
-        mockMvc.perform(post(SHIP_URL)
+        var request = aReceiveRequest().quantity(30).build();
+        mockMvc.perform(post(RECEIVE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.remainingQuantity").value(70));
+                .andExpect(jsonPath("$.quantity").value(130));
     }
 
     @Test
-    @DisplayName("재고 부족 → 409 + 현재 재고")
-    void ship_insufficient() throws Exception {
-        when(shipService.ship(any())).thenReturn(new ShipResult(INSUFFICIENT, 100));
+    @DisplayName("신규 상품 입고 → 200 + 등록된 수량")
+    void receive_new_product() throws Exception {
+        when(receiveService.receive(any())).thenReturn(new ReceiveResult(50));
 
-        var request = aShipmentRequest().quantity(120).build();
-        mockMvc.perform(post(SHIP_URL)
+        var request = aReceiveRequest().newProductId().quantity(50).build();
+        mockMvc.perform(post(RECEIVE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isConflict())
-                .andExpect(jsonPath("$.remainingQuantity").value(100));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.quantity").value(50));
     }
 
     @Test
-    @DisplayName("대상 상품 없음 → 404")
-    void ship_productNotFound() throws Exception {
-        var request = aShipmentRequest().notFoundProductId().build();
-        when(shipService.ship(any())).thenThrow(new ProductNotFoundException(request.productId()));
-
-        mockMvc.perform(post(SHIP_URL)
+    @DisplayName("입고 수량 0 → 잘못된 요청 거부 (400)")
+    void receive_zeroQuantity() throws Exception {
+        var request = aReceiveRequest().zeroQuantity().build();
+        mockMvc.perform(post(RECEIVE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.status").value(404));
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400));
     }
 
     @Test
-    @DisplayName("출고 수량 0 → 잘못된 요청 거부 (400)")
-    void ship_invalidQuantity() throws Exception {
-        var request = aShipmentRequest().zeroQuantity().build();
-        mockMvc.perform(post(SHIP_URL)
+    @DisplayName("name 누락(blank) → 잘못된 요청 거부 (400)")
+    void receive_blankName() throws Exception {
+        var request = aReceiveRequest().blankName().build();
+        mockMvc.perform(post(RECEIVE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
@@ -91,9 +86,9 @@ class ProductShipControllerTest {
 
     @Test
     @DisplayName("빈 productId → 잘못된 요청 거부 (400)")
-    void ship_blankProductId() throws Exception {
-        var request = aShipmentRequest().blankProductId().build();
-        mockMvc.perform(post(SHIP_URL)
+    void receive_blankProductId() throws Exception {
+        var request = aReceiveRequest().blankProductId().build();
+        mockMvc.perform(post(RECEIVE_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
