@@ -3,6 +3,7 @@ package com.deepfine.inventory.web;
 import com.deepfine.inventory.service.ProductNotFoundException;
 import com.deepfine.inventory.service.ReceiveService;
 import com.deepfine.inventory.service.ShipService;
+import com.deepfine.inventory.service.StockService;
 import com.deepfine.inventory.service.dto.ShipResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -39,6 +40,9 @@ class ProductShipControllerTest {
 
     @MockitoBean
     private ReceiveService receiveService;
+
+    @MockitoBean
+    private StockService stockService;
 
     @Test
     @DisplayName("출고 성공 → 200 + 남은 재고")

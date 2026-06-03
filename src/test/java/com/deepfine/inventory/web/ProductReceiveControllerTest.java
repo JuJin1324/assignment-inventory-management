@@ -2,6 +2,7 @@ package com.deepfine.inventory.web;
 
 import com.deepfine.inventory.service.ReceiveService;
 import com.deepfine.inventory.service.ShipService;
+import com.deepfine.inventory.service.StockService;
 import com.deepfine.inventory.service.dto.ReceiveResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -35,6 +36,9 @@ class ProductReceiveControllerTest {
 
     @MockitoBean
     private ReceiveService receiveService;
+
+    @MockitoBean
+    private StockService stockService;
 
     @Test
     @DisplayName("기존 상품 입고 → 200 + 증가된 수량")
