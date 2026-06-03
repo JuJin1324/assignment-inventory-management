@@ -1,20 +1,5 @@
 package com.deepfine.inventory.web;
 
-import com.deepfine.inventory.service.ProductNotFoundException;
-import com.deepfine.inventory.service.ReceiveService;
-import com.deepfine.inventory.service.ShipService;
-import com.deepfine.inventory.service.StockService;
-import com.deepfine.inventory.service.dto.ShipResult;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.MediaType;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.web.servlet.MockMvc;
-
 import static com.deepfine.inventory.ProductFixtures.aShipmentRequest;
 import static com.deepfine.inventory.domain.ShipmentResult.INSUFFICIENT;
 import static com.deepfine.inventory.domain.ShipmentResult.SUCCESS;
@@ -24,25 +9,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ProductController.class)
-class ProductShipControllerTest {
+import com.deepfine.inventory.service.ProductNotFoundException;
+import com.deepfine.inventory.service.dto.ShipResult;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+
+class ProductShipControllerTest extends ProductControllerTestBase {
 
     private static final String SHIP_URL = "/api/products/shipments";
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockitoBean
-    private ShipService shipService;
-
-    @MockitoBean
-    private ReceiveService receiveService;
-
-    @MockitoBean
-    private StockService stockService;
 
     @Test
     @DisplayName("출고 성공 → 200 + 남은 재고")

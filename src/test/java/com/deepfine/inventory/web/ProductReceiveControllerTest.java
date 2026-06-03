@@ -1,18 +1,5 @@
 package com.deepfine.inventory.web;
 
-import com.deepfine.inventory.service.ReceiveService;
-import com.deepfine.inventory.service.ShipService;
-import com.deepfine.inventory.service.StockService;
-import com.deepfine.inventory.service.dto.ReceiveResult;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.web.servlet.MockMvc;
-
 import static com.deepfine.inventory.ProductFixtures.aReceiveRequest;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -20,25 +7,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ProductController.class)
-class ProductReceiveControllerTest {
+import com.deepfine.inventory.service.dto.ReceiveResult;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
+
+class ProductReceiveControllerTest extends ProductControllerTestBase {
 
     private static final String RECEIVE_URL = "/api/products/receipts";
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockitoBean
-    private ShipService shipService;
-
-    @MockitoBean
-    private ReceiveService receiveService;
-
-    @MockitoBean
-    private StockService stockService;
 
     @Test
     @DisplayName("기존 상품 입고 → 200 + 증가된 수량")
