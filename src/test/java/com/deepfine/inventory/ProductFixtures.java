@@ -18,6 +18,7 @@ public class ProductFixtures {
 
 	public static final String DEFAULT_PRODUCT_ID = "PROD-001";
 	private static final String NOT_FOUND_PRODUCT_ID = "NO-SUCH-PRODUCT";
+	private static final String DEFAULT_PRODUCT_NAME = "상품 A";
 	private static final int DEFAULT_PRODUCT_QUANTITY = 100;
 	private static final int DEFAULT_SHIP_QUANTITY = 30;
 
@@ -37,10 +38,16 @@ public class ProductFixtures {
 	public static class ProductTestBuilder {
 
 		private String productId = DEFAULT_PRODUCT_ID;
+		private String name = DEFAULT_PRODUCT_NAME;
 		private int quantity = DEFAULT_PRODUCT_QUANTITY;
 
 		public ProductTestBuilder quantity(int quantity) {
 			this.quantity = quantity;
+			return this;
+		}
+
+		public ProductTestBuilder name(String name) {
+			this.name = name;
 			return this;
 		}
 
@@ -55,7 +62,7 @@ public class ProductFixtures {
 		}
 
 		public Product build() {
-			return new Product(productId, quantity);
+			return new Product(productId, name, quantity);
 		}
 	}
 

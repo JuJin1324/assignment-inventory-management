@@ -29,7 +29,7 @@ class ProductPersistenceTest {
 	@DisplayName("저장 → 조회 → 값·공통 컬럼·version 채워짐")
 	void save_then_find() {
 		// given
-		Product product = aProduct().quantity(100).build();
+		Product product = aProduct().build();
 
 		// when
 		Product saved = productRepository.save(product);
@@ -38,8 +38,9 @@ class ProductPersistenceTest {
 		Product found = productRepository.findById(saved.getId()).orElseThrow();
 
 		// then
-		assertThat(found.getProductId()).isEqualTo("PROD-001");
-		assertThat(found.getQuantity()).isEqualTo(100);
+		assertThat(found.getProductId()).isEqualTo(product.getProductId());
+		assertThat(found.getName()).isEqualTo(product.getName());
+		assertThat(found.getQuantity()).isEqualTo(product.getQuantity());
 		assertThat(found.getCreatedAt()).isNotNull();
 		assertThat(found.getUpdatedAt()).isNotNull();
 		assertThat(found.getVersion()).isEqualTo(0L);

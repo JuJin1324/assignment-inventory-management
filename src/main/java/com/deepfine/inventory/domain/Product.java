@@ -37,13 +37,17 @@ public class Product extends BaseEntity {
 	private String productId;
 
 	@Column(nullable = false)
+	private String name;
+
+	@Column(nullable = false)
 	private int quantity;
 
-	public Product(String productId, int quantity) {
+	public Product(String productId, String name, int quantity) {
 		if (quantity < 0) {
 			throw new IllegalArgumentException("재고 수량은 0 미만일 수 없습니다: " + quantity);
 		}
 		this.productId = productId;
+		this.name = name;
 		this.quantity = quantity;
 	}
 

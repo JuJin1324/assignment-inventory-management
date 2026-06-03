@@ -7,7 +7,7 @@
 ```mermaid
 graph LR
     T1["Task 1<br/>전 계층 Stock→Product 리네임 (동작 불변) (완료)"]
-    T2["Task 2<br/>Product에 name 추가"]
+    T2["Task 2<br/>Product에 name 추가 (완료)"]
     T1 --> T2
 ```
 
@@ -46,7 +46,9 @@ graph LR
 
 ---
 
-## Task 2 — Product에 name 추가
+## Task 2 — Product에 name 추가 ✅ 완료
+
+실행 기록: [task2-executed.md](task2-executed.md)
 
 ### 목표
 
