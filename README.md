@@ -61,6 +61,7 @@ curl -s http://localhost:18080/api/products/P001
 - **[scenarios.md](docs/modeling/scenarios.md)** — 입고·출고·재고 조회 대표 사용 사례를 시퀀스로 표현
 - **[structure.md](docs/modeling/structure.md)** — 도메인 개념 구조 (상품 애그리거트 중심)
 - **structure-*.md** — 입고·출고·재고 조회·동시성 제어 각 기능의 계층 구조
+- **[infrastructure.md](docs/modeling/infrastructure.md)** — 앱·DB Docker Compose 구조
 
 ### 2. [docs/epics/](docs/epics/)
 
