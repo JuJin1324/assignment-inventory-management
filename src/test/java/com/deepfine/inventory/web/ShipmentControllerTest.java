@@ -2,7 +2,7 @@ package com.deepfine.inventory.web;
 
 import com.deepfine.inventory.service.ShipResult;
 import com.deepfine.inventory.service.ShipService;
-import com.deepfine.inventory.service.StockNotFoundException;
+import com.deepfine.inventory.service.ProductNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.deepfine.inventory.StockFixtures.aShipmentRequest;
+import static com.deepfine.inventory.ProductFixtures.aShipmentRequest;
 import static com.deepfine.inventory.domain.ShipmentResult.INSUFFICIENT;
 import static com.deepfine.inventory.domain.ShipmentResult.SUCCESS;
 import static org.mockito.ArgumentMatchers.any;
@@ -61,9 +61,9 @@ class ShipmentControllerTest {
 
     @Test
     @DisplayName("대상 재고 없음 → 404")
-    void ship_stockNotFound() throws Exception {
+    void ship_productNotFound() throws Exception {
         ShipmentRequest request = aShipmentRequest().notFoundProductId().build();
-        when(shipService.ship(any())).thenThrow(new StockNotFoundException(request.productId()));
+        when(shipService.ship(any())).thenThrow(new ProductNotFoundException(request.productId()));
 
         mockMvc.perform(post(SHIP_URL)
                         .contentType(MediaType.APPLICATION_JSON)

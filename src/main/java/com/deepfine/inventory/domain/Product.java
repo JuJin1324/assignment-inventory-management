@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
- * 어떤 상품의 재고. 현재 수량을 들고, 출고되면 그만큼 차감한다.
+ * 상품. 현재 보유 수량(재고)을 들고, 출고되면 그만큼 차감한다.
  *
  * <p>재고가 충분하면 출고 수량만큼 차감하고, 부족하면 거부한다. 부족은 정상 분기라
  * 예외가 아니라 {@link ShipmentResult}로 돌려준다. 재고 수량은 0 미만이 될 수 없고
@@ -24,10 +24,10 @@ import lombok.NoArgsConstructor;
  * 앱 코드는 검증 생성자만 쓰게 한다.
  */
 @Entity
-@Table(name = "stock", indexes = @Index(name = "idx_stock_product_id", columnList = "product_id"))
+@Table(name = "product", indexes = @Index(name = "idx_product_product_id", columnList = "product_id"))
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Stock extends BaseEntity {
+public class Product extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +39,7 @@ public class Stock extends BaseEntity {
 	@Column(nullable = false)
 	private int quantity;
 
-	public Stock(String productId, int quantity) {
+	public Product(String productId, int quantity) {
 		if (quantity < 0) {
 			throw new IllegalArgumentException("재고 수량은 0 미만일 수 없습니다: " + quantity);
 		}

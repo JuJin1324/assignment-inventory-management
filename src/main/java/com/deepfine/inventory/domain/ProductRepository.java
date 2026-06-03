@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * 재고 영속 — Spring Data JPA. 기본 저장·조회(save/findById 등)에 더해 productId로 조회한다.
  */
-public interface StockRepository extends JpaRepository<Stock, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
-	Optional<Stock> findByProductId(String productId);
+	Optional<Product> findByProductId(String productId);
 }

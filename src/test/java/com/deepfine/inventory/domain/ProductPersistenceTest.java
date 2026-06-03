@@ -1,6 +1,6 @@
 package com.deepfine.inventory.domain;
 
-import static com.deepfine.inventory.StockFixtures.aStock;
+import static com.deepfine.inventory.ProductFixtures.aProduct;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.deepfine.inventory.config.JpaAuditingConfig;
@@ -12,15 +12,15 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 
 /**
- * Stock 영속 검증 — 임베디드 H2로 저장·조회와 공통 컬럼·낙관락 매핑을 확인한다.
+ * Product 영속 검증 — 임베디드 H2로 저장·조회와 공통 컬럼·낙관락 매핑을 확인한다.
  * Auditing은 @DataJpaTest가 자동으로 안 켜므로 JpaAuditingConfig을 import한다.
  */
 @DataJpaTest
 @Import(JpaAuditingConfig.class)
-class StockPersistenceTest {
+class ProductPersistenceTest {
 
 	@Autowired
-	private StockRepository stockRepository;
+	private ProductRepository productRepository;
 
 	@Autowired
 	private TestEntityManager em;
@@ -29,13 +29,13 @@ class StockPersistenceTest {
 	@DisplayName("저장 → 조회 → 값·공통 컬럼·version 채워짐")
 	void save_then_find() {
 		// given
-		Stock stock = aStock().quantity(100).build();
+		Product product = aProduct().quantity(100).build();
 
 		// when
-		Stock saved = stockRepository.save(stock);
+		Product saved = productRepository.save(product);
 		em.flush();
 		em.clear();
-		Stock found = stockRepository.findById(saved.getId()).orElseThrow();
+		Product found = productRepository.findById(saved.getId()).orElseThrow();
 
 		// then
 		assertThat(found.getProductId()).isEqualTo("PROD-001");

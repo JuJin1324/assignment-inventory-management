@@ -1,8 +1,8 @@
 package com.deepfine.inventory.service;
 
 import com.deepfine.inventory.domain.ShipmentResult;
-import com.deepfine.inventory.domain.Stock;
-import com.deepfine.inventory.domain.StockRepository;
+import com.deepfine.inventory.domain.Product;
+import com.deepfine.inventory.domain.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,16 +16,16 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ShipService {
 
-	private final StockRepository stockRepository;
+	private final ProductRepository productRepository;
 
 	public ShipResult ship(ShipCommand command) {
-		Stock stock = stockRepository.findByProductId(command.productId())
-				.orElseThrow(() -> new StockNotFoundException(command.productId()));
+		Product product = productRepository.findByProductId(command.productId())
+				.orElseThrow(() -> new ProductNotFoundException(command.productId()));
 
-		ShipmentResult outcome = stock.ship(command.quantity());
+		ShipmentResult outcome = product.ship(command.quantity());
 		if (outcome == ShipmentResult.SUCCESS) {
-			stockRepository.save(stock);
+			productRepository.save(product);
 		}
-		return new ShipResult(outcome, stock.getQuantity());
+		return new ShipResult(outcome, product.getQuantity());
 	}
 }

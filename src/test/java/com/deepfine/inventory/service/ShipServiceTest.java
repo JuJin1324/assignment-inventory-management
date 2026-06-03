@@ -1,8 +1,8 @@
 package com.deepfine.inventory.service;
 
-import static com.deepfine.inventory.StockFixtures.DEFAULT_PRODUCT_ID;
-import static com.deepfine.inventory.StockFixtures.aShipCommand;
-import static com.deepfine.inventory.StockFixtures.aStock;
+import static com.deepfine.inventory.ProductFixtures.DEFAULT_PRODUCT_ID;
+import static com.deepfine.inventory.ProductFixtures.aShipCommand;
+import static com.deepfine.inventory.ProductFixtures.aProduct;
 import static com.deepfine.inventory.domain.ShipmentResult.INSUFFICIENT;
 import static com.deepfine.inventory.domain.ShipmentResult.SUCCESS;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,8 +12,8 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.deepfine.inventory.domain.Stock;
-import com.deepfine.inventory.domain.StockRepository;
+import com.deepfine.inventory.domain.Product;
+import com.deepfine.inventory.domain.ProductRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class ShipServiceTest {
 
 	@Mock
-	private StockRepository stockRepository;
+	private ProductRepository productRepository;
 
 	@InjectMocks
 	private ShipService shipService;
@@ -35,8 +35,8 @@ class ShipServiceTest {
 	@DisplayName("재고 충분 → 차감·저장 후 남은 재고 반환")
 	void ship_success() {
 		// given
-		Stock stock = aStock().quantity(100).build();
-		when(stockRepository.findByProductId(DEFAULT_PRODUCT_ID)).thenReturn(Optional.of(stock));
+		Product product = aProduct().quantity(100).build();
+		when(productRepository.findByProductId(DEFAULT_PRODUCT_ID)).thenReturn(Optional.of(product));
 
 		// when
 		ShipResult result = shipService.ship(aShipCommand().quantity(30).build());
@@ -44,15 +44,15 @@ class ShipServiceTest {
 		// then
 		assertThat(result.outcome()).isEqualTo(SUCCESS);
 		assertThat(result.remainingQuantity()).isEqualTo(70);
-		verify(stockRepository).save(stock);
+		verify(productRepository).save(product);
 	}
 
 	@Test
 	@DisplayName("재고 부족 → 저장 안 함, 부족 반환")
 	void ship_insufficient() {
 		// given
-		Stock stock = aStock().quantity(100).build();
-		when(stockRepository.findByProductId(DEFAULT_PRODUCT_ID)).thenReturn(Optional.of(stock));
+		Product product = aProduct().quantity(100).build();
+		when(productRepository.findByProductId(DEFAULT_PRODUCT_ID)).thenReturn(Optional.of(product));
 
 		// when
 		ShipResult result = shipService.ship(aShipCommand().quantity(120).build());
@@ -60,18 +60,18 @@ class ShipServiceTest {
 		// then
 		assertThat(result.outcome()).isEqualTo(INSUFFICIENT);
 		assertThat(result.remainingQuantity()).isEqualTo(100);
-		verify(stockRepository, never()).save(any());
+		verify(productRepository, never()).save(any());
 	}
 
 	@Test
-	@DisplayName("상품 재고 없음 → StockNotFoundException")
-	void ship_stock_not_found() {
+	@DisplayName("상품 재고 없음 → ProductNotFoundException")
+	void ship_product_not_found() {
 		// given
 		ShipCommand command = aShipCommand().notFoundProductId().build();
-		when(stockRepository.findByProductId(command.productId())).thenReturn(Optional.empty());
+		when(productRepository.findByProductId(command.productId())).thenReturn(Optional.empty());
 
 		// when / then
 		assertThatThrownBy(() -> shipService.ship(command))
-				.isInstanceOf(StockNotFoundException.class);
+				.isInstanceOf(ProductNotFoundException.class);
 	}
 }
