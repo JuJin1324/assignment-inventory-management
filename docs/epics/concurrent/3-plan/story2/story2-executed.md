@@ -14,6 +14,7 @@
 
 변경 파일:
 - `docs/modeling/scenarios.md`
+- `docs/modeling/structure-concurrent.md` — 설명에서 "재시도 또는 에러 응답" → "409로 응답하고 닫는다"로 정합
 
 ## 다음 행동
 

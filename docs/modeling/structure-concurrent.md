@@ -16,7 +16,7 @@ graph TD
 
 ## 설명
 
-낙관 락(`@Version`)을 `Product`에 추가해 동시 수량 변경을 제어한다. 두 트랜잭션이 같은 상품을 동시에 읽고 변경을 시도할 때, JPA가 저장 시점에 버전을 비교해 먼저 저장한 쪽은 통과시키고 나머지는 `ObjectOptimisticLockingFailureException`을 던진다. 서비스 계층 위에서 재시도 또는 에러 응답으로 처리한다.
+낙관 락(`@Version`)을 `Product`에 추가해 동시 수량 변경을 제어한다. 두 트랜잭션이 같은 상품을 동시에 읽고 변경을 시도할 때, JPA가 저장 시점에 버전을 비교해 먼저 저장한 쪽은 통과시키고 나머지는 `ObjectOptimisticLockingFailureException`을 던진다. 예외 핸들러가 409 Conflict로 응답하고 닫는다.
 
 비관 락(`SELECT … FOR UPDATE`)도 후보였으나 낙관 락을 선도입한다 — 충돌 빈도 데이터가 없는 상태에서 먼저 운용하며 충돌 예외 빈도를 수집하고, 잦아지면 비관 락으로 전환한다 ([ADR-012](../adr/adr-012-optimistic-locking.md)).
 
