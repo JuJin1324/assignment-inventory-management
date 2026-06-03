@@ -24,5 +24,5 @@ graph TD
 
 - **`@Version` 컬럼 (Product)** — JPA가 관리하는 버전 필드. 저장 시 `WHERE id = ? AND version = ?`로 조건을 걸어 버전이 바뀌었으면 업데이트 행 수가 0이 되고 JPA가 충돌로 판단한다.
 - **서비스 (ShipService · ReceiveService)** — 코드 변경 없음. 낙관 락 충돌은 JPA·Spring Data가 투명하게 처리한다. 충돌 시 `ObjectOptimisticLockingFailureException`이 트랜잭션 바깥으로 전파된다.
-- **예외 핸들러 (ApiExceptionHandler)** — `ObjectOptimisticLockingFailureException`을 409 Conflict로 매핑해 호출자에게 재시도를 알린다.
+- **예외 핸들러 (ApiExceptionHandler)** — `ObjectOptimisticLockingFailureException`을 409 Conflict로 매핑한다. 재시도는 과제 범위 밖이므로 409로 응답하고 닫는다.
 - **리포지토리 (ProductRepository)** — 변경 없음. 낙관 락은 JPA 레벨에서 동작한다.
