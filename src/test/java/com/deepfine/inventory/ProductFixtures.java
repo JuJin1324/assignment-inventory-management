@@ -1,6 +1,7 @@
 package com.deepfine.inventory;
 
 import com.deepfine.inventory.domain.Product;
+import com.deepfine.inventory.service.ReceiveCommand;
 import com.deepfine.inventory.service.ShipCommand;
 import com.deepfine.inventory.web.ShipmentRequest;
 import lombok.AccessLevel;
@@ -28,6 +29,10 @@ public class ProductFixtures {
 
 	public static ShipCommandTestBuilder aShipCommand() {
 		return new ShipCommandTestBuilder();
+	}
+
+	public static ReceiveCommandTestBuilder aReceiveCommand() {
+		return new ReceiveCommandTestBuilder();
 	}
 
 	public static ShipmentRequestTestBuilder aShipmentRequest() {
@@ -63,6 +68,28 @@ public class ProductFixtures {
 
 		public Product build() {
 			return new Product(productId, name, quantity);
+		}
+	}
+
+	@NoArgsConstructor(access = AccessLevel.PRIVATE)
+	public static class ReceiveCommandTestBuilder {
+
+		private String productId = DEFAULT_PRODUCT_ID;
+		private String name = DEFAULT_PRODUCT_NAME;
+		private int quantity = 30;
+
+		public ReceiveCommandTestBuilder newProductId() {
+			this.productId = "NEW-PROD-001";
+			return this;
+		}
+
+		public ReceiveCommandTestBuilder quantity(int quantity) {
+			this.quantity = quantity;
+			return this;
+		}
+
+		public ReceiveCommand build() {
+			return new ReceiveCommand(productId, name, quantity);
 		}
 	}
 
