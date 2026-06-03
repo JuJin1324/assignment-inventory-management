@@ -5,7 +5,7 @@
 - `web/dto/StockResponse.java` 추가 — `quantity` 하나를 싣는 record
 - `ProductController`에 `GET /api/products/{productId}` 추가 — `StockService.query()` 호출 후 `StockResponse` 반환
 - `ProductStockControllerTest` 슬라이스 테스트 추가 — 정상 조회(200), 미등록(404)
-- 기존 컨트롤러 테스트(`ProductReceiveControllerTest`·`ProductShipControllerTest`)에 `@MockitoBean StockService` 추가 — `ProductController`에 의존성이 추가되면서 컨텍스트 로딩 실패 수정
+- `ProductControllerTestBase` 기반 클래스 추출 — `@WebMvcTest` + `MockMvc` + `ObjectMapper` + `MockitoBean` 3개를 한 곳으로 통합. 세 컨트롤러 테스트가 상속으로 공유하며, 서비스 추가 시 기반 클래스만 수정하면 되는 구조
 
 ## 결과
 
