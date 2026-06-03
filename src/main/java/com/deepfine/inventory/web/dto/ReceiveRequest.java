@@ -1,4 +1,4 @@
-package com.deepfine.inventory.web;
+package com.deepfine.inventory.web.dto;
 
 import com.deepfine.inventory.service.dto.ReceiveCommand;
 import jakarta.validation.constraints.Min;
