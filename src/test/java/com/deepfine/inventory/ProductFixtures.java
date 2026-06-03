@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class ProductFixtures {
 
 	public static final String DEFAULT_PRODUCT_ID = "PROD-001";
-	private static final String NOT_FOUND_PRODUCT_ID = "NO-SUCH-PRODUCT";
+	public static final String NOT_FOUND_PRODUCT_ID = "NO-SUCH-PRODUCT";
 	private static final String DEFAULT_PRODUCT_NAME = "상품 A";
 	private static final int DEFAULT_PRODUCT_QUANTITY = 100;
 	private static final int DEFAULT_SHIP_QUANTITY = 30;
