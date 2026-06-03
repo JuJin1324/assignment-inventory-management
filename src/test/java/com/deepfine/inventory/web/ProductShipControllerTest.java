@@ -21,10 +21,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ShipmentController.class)
-class ShipmentControllerTest {
+@WebMvcTest(ProductController.class)
+class ProductShipControllerTest {
 
-    private static final String SHIP_URL = "/api/stock/shipment";
+    private static final String SHIP_URL = "/api/products/shipments";
 
     @Autowired
     private MockMvc mockMvc;
@@ -60,7 +60,7 @@ class ShipmentControllerTest {
     }
 
     @Test
-    @DisplayName("대상 재고 없음 → 404")
+    @DisplayName("대상 상품 없음 → 404")
     void ship_productNotFound() throws Exception {
         ShipmentRequest request = aShipmentRequest().notFoundProductId().build();
         when(shipService.ship(any())).thenThrow(new ProductNotFoundException(request.productId()));
