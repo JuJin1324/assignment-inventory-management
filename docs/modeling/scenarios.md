@@ -105,3 +105,30 @@ sequenceDiagram
 - 두 트랜잭션이 같은 수량을 읽는 순간이 충돌의 씨앗이다 — *읽기·쓰기 사이의 간격*에서 lost update가 발생한다
 - 시스템이 충돌을 먼저 탐지해야 한다 — 탐지 없이 덮어쓰면 한 트랜잭션의 변경이 사라진다
 - 충돌한 요청은 409로 닫는다 — 재시도는 호출자 몫이다 (ADR-012)
+
+## 재고 조회
+
+```mermaid
+sequenceDiagram
+    actor Staff as 재고 담당자
+    participant System as 재고 관리 시스템
+    participant Store as 재고 저장소
+
+    Staff->>System: 재고 조회 요청 (productId)
+    System->>Store: 상품 조회
+    Store-->>System: 조회 결과
+    alt 등록된 상품이면
+        System-->>Staff: 현재 수량
+    else 미등록 상품이면
+        System-->>Staff: 거부 (404)
+    end
+```
+
+### 흐름 설명
+
+재고 담당자가 `productId`를 담아 조회를 요청하면, 시스템은 해당 상품을 찾아 현재 수량을 돌려준다. 미등록 상품이면 404로 닫는다.
+
+### 흐름 특유의 모양
+
+- 읽기 전용 — 수량을 건드리지 않아 동시성 제어가 필요 없다
+- 상품 부재는 404로 닫는다 — 입고처럼 자동 등록하지 않는다
