@@ -126,3 +126,83 @@ main 패키지 구조를 그대로 따르며 계층별로 테스트를 분리한
 - **web/** — 컨트롤러 단위 테스트
 - **ProductFixtures** — 계층 전반에서 공유하는 테스트 데이터 빌더
 
+## 테스트
+
+`make up`으로 앱을 띄운 뒤 아래 순서대로 요청을 보내 응답을 확인한다.
+
+**1. 입고 — 미등록 상품 신규 등록**
+
+```bash
+curl -s -X POST http://localhost:18080/api/products/receipts \
+  -H "Content-Type: application/json" \
+  -d '{"productId": "P001", "name": "노트북", "quantity": 10}'
+```
+```json
+{"quantity": 10}
+```
+
+**2. 재고 조회**
+
+```bash
+curl -s http://localhost:18080/api/products/P001
+```
+```json
+{"quantity": 10}
+```
+
+**3. 출고**
+
+```bash
+curl -s -X POST http://localhost:18080/api/products/shipments \
+  -H "Content-Type: application/json" \
+  -d '{"productId": "P001", "quantity": 3}'
+```
+```json
+{"remainingQuantity": 7}
+```
+
+**4. 출고 — 재고 부족 (HTTP 409)**
+
+```bash
+curl -s -w "\nHTTP %{http_code}" -X POST http://localhost:18080/api/products/shipments \
+  -H "Content-Type: application/json" \
+  -d '{"productId": "P001", "quantity": 100}'
+```
+```
+{"remainingQuantity": 7}
+HTTP 409
+```
+
+**5. 출고 — 재고 정확히 소진**
+
+```bash
+curl -s -X POST http://localhost:18080/api/products/shipments \
+  -H "Content-Type: application/json" \
+  -d '{"productId": "P001", "quantity": 7}'
+```
+```json
+{"remainingQuantity": 0}
+```
+
+**6. 출고 — 없는 상품 (HTTP 404)**
+
+```bash
+curl -s -w "\nHTTP %{http_code}" -X POST http://localhost:18080/api/products/shipments \
+  -H "Content-Type: application/json" \
+  -d '{"productId": "NO-SUCH", "quantity": 1}'
+```
+```
+{"status": 404, "message": "상품을 찾을 수 없습니다: productId=NO-SUCH"}
+HTTP 404
+```
+
+**7. 재고 조회 — 없는 상품 (HTTP 404)**
+
+```bash
+curl -s -w "\nHTTP %{http_code}" http://localhost:18080/api/products/NO-SUCH
+```
+```
+{"status": 404, "message": "상품을 찾을 수 없습니다: productId=NO-SUCH"}
+HTTP 404
+```
+

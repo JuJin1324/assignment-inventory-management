@@ -1,7 +1,5 @@
 # 시스템 내부 구조
 
-재고 관리 시스템 내부를 도메인 개념 단위로 나누고, 각 컴포넌트가 무슨 책임을 지는지 정의한다.
-
 ```mermaid
 graph LR
     Product["상품<br/>(Product)<br/>id · productId · name · quantity"]
