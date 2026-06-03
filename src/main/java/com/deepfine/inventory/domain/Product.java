@@ -51,6 +51,13 @@ public class Product extends BaseEntity {
 		this.quantity = quantity;
 	}
 
+	public void receive(int quantity) {
+		if (quantity <= 0) {
+			throw new IllegalArgumentException("입고 수량은 양수여야 합니다: " + quantity);
+		}
+		this.quantity += quantity;
+	}
+
 	/**
 	 * 출고를 시도한다. 재고가 충분하면 출고 수량만큼 차감하고 {@link ShipmentResult#SUCCESS},
 	 * 부족하면 재고를 건드리지 않고 {@link ShipmentResult#INSUFFICIENT}을 돌려준다.
