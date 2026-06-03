@@ -1,5 +1,9 @@
 # ADR-003: 단위테스트 전략 — Given/When/Then + Test Data Builder
 
+## 날짜
+
+2026-06-02
+
 ## 상태
 
 채택 (Accepted)
