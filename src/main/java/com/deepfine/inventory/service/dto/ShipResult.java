@@ -1,4 +1,4 @@
-package com.deepfine.inventory.service;
+package com.deepfine.inventory.service.dto;
 
 import com.deepfine.inventory.domain.ShipmentResult;
 

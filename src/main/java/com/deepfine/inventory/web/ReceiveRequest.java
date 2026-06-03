@@ -1,6 +1,6 @@
 package com.deepfine.inventory.web;
 
-import com.deepfine.inventory.service.ReceiveCommand;
+import com.deepfine.inventory.service.dto.ReceiveCommand;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 

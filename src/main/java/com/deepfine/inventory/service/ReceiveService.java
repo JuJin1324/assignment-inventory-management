@@ -2,6 +2,8 @@ package com.deepfine.inventory.service;
 
 import com.deepfine.inventory.domain.Product;
 import com.deepfine.inventory.domain.ProductRepository;
+import com.deepfine.inventory.service.dto.ReceiveCommand;
+import com.deepfine.inventory.service.dto.ReceiveResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -10,6 +10,8 @@ import static org.mockito.Mockito.when;
 
 import com.deepfine.inventory.domain.Product;
 import com.deepfine.inventory.domain.ProductRepository;
+import com.deepfine.inventory.service.dto.ReceiveCommand;
+import com.deepfine.inventory.service.dto.ReceiveResult;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

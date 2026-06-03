@@ -1,4 +1,4 @@
-package com.deepfine.inventory.service;
+package com.deepfine.inventory.service.dto;
 
 /**
  * 출고 요청 입력 — 어느 상품(productId)을 얼마나(quantity) 출고할지. 단순 운반체로,

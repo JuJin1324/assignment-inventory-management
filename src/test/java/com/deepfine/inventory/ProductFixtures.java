@@ -1,8 +1,8 @@
 package com.deepfine.inventory;
 
 import com.deepfine.inventory.domain.Product;
-import com.deepfine.inventory.service.ReceiveCommand;
-import com.deepfine.inventory.service.ShipCommand;
+import com.deepfine.inventory.service.dto.ReceiveCommand;
+import com.deepfine.inventory.service.dto.ShipCommand;
 import com.deepfine.inventory.web.ReceiveRequest;
 import com.deepfine.inventory.web.ShipmentRequest;
 import lombok.AccessLevel;

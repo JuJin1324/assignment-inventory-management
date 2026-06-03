@@ -2,8 +2,8 @@ package com.deepfine.inventory.web;
 
 import com.deepfine.inventory.service.ProductNotFoundException;
 import com.deepfine.inventory.service.ReceiveService;
-import com.deepfine.inventory.service.ShipResult;
 import com.deepfine.inventory.service.ShipService;
+import com.deepfine.inventory.service.dto.ShipResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

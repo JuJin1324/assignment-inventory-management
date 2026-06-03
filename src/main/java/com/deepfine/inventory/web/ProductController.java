@@ -1,10 +1,10 @@
 package com.deepfine.inventory.web;
 
 import com.deepfine.inventory.domain.ShipmentResult;
-import com.deepfine.inventory.service.ReceiveResult;
 import com.deepfine.inventory.service.ReceiveService;
-import com.deepfine.inventory.service.ShipResult;
 import com.deepfine.inventory.service.ShipService;
+import com.deepfine.inventory.service.dto.ReceiveResult;
+import com.deepfine.inventory.service.dto.ShipResult;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

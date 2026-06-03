@@ -3,6 +3,8 @@ package com.deepfine.inventory.service;
 import com.deepfine.inventory.domain.ShipmentResult;
 import com.deepfine.inventory.domain.Product;
 import com.deepfine.inventory.domain.ProductRepository;
+import com.deepfine.inventory.service.dto.ShipCommand;
+import com.deepfine.inventory.service.dto.ShipResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
